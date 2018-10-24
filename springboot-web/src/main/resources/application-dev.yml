@@ -1,0 +1,19 @@
+#spring:
+  #datasource:
+    #driver-class-name: com.mysql.jdbc.Driver
+    #data-password: root
+    #data-username: root
+    #url: jdbc:mysql://localhost:3306/springboot-dev
+    #不要乱用配置 https://blog.csdn.net/ice_lemon_g/article/details/73613619
+spring:
+  # 数据源配置
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/springboot-dev?useSSL=true
+    username: root
+    password: root
+
+server:
+  servlet:
+    context-path: /my
+
