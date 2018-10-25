@@ -8,11 +8,11 @@ public class BizException {
 
     private int code;
 
-    private String message;
+    private String msg;
 
     public BizException(BizEnum bizEnum) {
         this.code = bizEnum.getCode();
-        this.message = bizEnum.getMessage();
+        this.msg = bizEnum.getMsg();
     }
 
     public int getCode() {
@@ -23,11 +23,11 @@ public class BizException {
         this.code = code;
     }
 
-    public String getMessage() {
-        return message;
+    public String getMsg() {
+        return msg;
     }
 
-    public void setMessage(String message) {
-        this.message = message;
+    public void setMsg(String msg) {
+        this.msg = msg;
     }
 }

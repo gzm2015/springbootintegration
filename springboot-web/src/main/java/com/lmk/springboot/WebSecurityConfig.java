@@ -58,13 +58,19 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http
+        /*http
                 .authorizeRequests()
                 .antMatchers("/admin/**").hasRole("AMDIN")
+                .antMatchers("/index").anonymous()
+                .antMatchers("/login").anonymous()
                 .anyRequest().authenticated()//其他的路径都是登录后即可访问
-                .and().formLogin().loginPage("/index.html").permitAll()
+                .and()
+                .formLogin()
+                .loginPage("/login")//未登录直接写页面地址跳转到这里处理
+                .loginProcessingUrl("/loginOnForm")//post请求时处理请求 不用在controller中写出 会使用自定义的userdetailservice进行验证
+                .usernameParameter("username").passwordParameter("password").permitAll()
                 .defaultSuccessUrl("/dashboard")
-                /*.successHandler(new AuthenticationSuccessHandler() {
+                .successHandler(new AuthenticationSuccessHandler() {
                         @Override
                         public void onAuthenticationSuccess(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Authentication authentication) throws IOException, ServletException {
                             httpServletResponse.setContentType("application/json;charset=utf-8");
@@ -73,8 +79,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                             out.flush();
                             out.close();
                         }
-                })*/
-                /*.failureHandler(new AuthenticationFailureHandler() {
+                })
+                .failureHandler(new AuthenticationFailureHandler() {
                     @Override
                     public void onAuthenticationFailure(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, AuthenticationException e) throws IOException, ServletException {
                         httpServletResponse.setContentType("application/json;charset=utf-8");
@@ -83,15 +89,43 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                         out.flush();
                         out.close();
                     }
-                })*/
-                .loginProcessingUrl("/login")//真正处理login的地方
+                })
+                .permitAll()
+                .and().logout().permitAll().and().csrf().disable();*/
+        http.authorizeRequests()
+                .antMatchers("/admin/**").hasRole("超级管理员")
+                .antMatchers("/index").anonymous()
+                .anyRequest().authenticated()//其他的路径都是登录后即可访问
+                .and()
+                .formLogin().loginPage("/login")
+                .successHandler(new AuthenticationSuccessHandler() {
+                    @Override
+                    public void onAuthenticationSuccess(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Authentication authentication) throws IOException, ServletException {
+                        httpServletResponse.setContentType("application/json;charset=utf-8");
+                        PrintWriter out = httpServletResponse.getWriter();
+                        out.write("{\"status\":\"ok\",\"msg\":\"登录成功\"}");
+                        out.flush();
+                        out.close();
+                    }
+                })
+                .failureHandler(new AuthenticationFailureHandler() {
+                    @Override
+                    public void onAuthenticationFailure(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, AuthenticationException e) throws IOException, ServletException {
+                        httpServletResponse.setContentType("application/json;charset=utf-8");
+                        PrintWriter out = httpServletResponse.getWriter();
+                        out.write("{\"status\":\"error\",\"msg\":\"登录失败\"}");
+                        out.flush();
+                        out.close();
+                    }
+                })
+                .loginProcessingUrl("/loginOnForm")
                 .usernameParameter("username").passwordParameter("password").permitAll()
                 .and().logout().permitAll().and().csrf().disable();
     }
 
-    /*注意spring boot 默认静态位置就在 static 文件夹下 误需多加一层*/
+    /*注意spring boot 默认静态位置就在 static 文件夹下 无需多加一层*/
     @Override
     public void configure(WebSecurity web) throws Exception {
-        web.ignoring().antMatchers("/js/**").antMatchers("/css/**");
+        web.ignoring().antMatchers("/login.html","/js/**","/css/**","/login");
     }
 }

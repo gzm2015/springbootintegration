@@ -7,13 +7,13 @@ public enum BizEnum {
 
     NOT_FOUND(400,"找不到");
 
-    BizEnum(int code, String message) {
+    BizEnum(int code, String msg) {
         this.code = code;
-        this.message = message;
+        this.msg = msg;
     }
     private int code;
 
-    private String message;
+    private String msg;
 
 
     public int getCode() {
@@ -24,11 +24,11 @@ public enum BizEnum {
         this.code = code;
     }
 
-    public String getMessage() {
-        return message;
+    public String getMsg() {
+        return msg;
     }
 
-    public void setMessage(String message) {
-        this.message = message;
+    public void setMsg(String msg) {
+        this.msg = msg;
     }
 }

@@ -7,6 +7,6 @@ package com.lmk.springboot.warp;
 public class FailTip extends Tip{
     public FailTip() {
         this.code = 200;
-        this.message = "fail";
+        this.msg = "fail";
     }
 }

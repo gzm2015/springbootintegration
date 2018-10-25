@@ -85,7 +85,7 @@
         <include refid="USER_ROLE_List"/>
         from sys_user s join user_role_link url join sys_role r on s.user_id = url.user_uuid and  url.role_uuid = r.role_id
         <where>
-            <if test="username != null">s.username like "%"#{username}"%"</if>
+            <if test="username != null  and username != '' ">s.username like "%"#{username}"%"</if>
         </where>
     </select>
 </mapper>

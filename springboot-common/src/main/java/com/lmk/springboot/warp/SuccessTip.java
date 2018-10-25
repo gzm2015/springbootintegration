@@ -7,6 +7,6 @@ package com.lmk.springboot.warp;
 public class SuccessTip extends Tip{
     public SuccessTip() {
         this.code = 100;
-        this.message = "success";
+        this.msg = "success";
     }
 }

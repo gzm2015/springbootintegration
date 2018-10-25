@@ -1,5 +1,6 @@
 package com.lmk.springboot.service.impl;
 
+import com.github.pagehelper.util.StringUtil;
 import com.lmk.springboot.entity.SysUserEntity;
 import com.lmk.springboot.service.SysUserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,11 +16,11 @@ public class LoginSecurityService implements UserDetailsService {
     SysUserService sysUserService;
 
     @Override
-    public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
+    public UserDetails loadUserByUsername(String userInput) throws UsernameNotFoundException {
         SysUserEntity entity = new SysUserEntity();
-        entity.setUsername(s);
+        entity.setUsername(userInput);
         SysUserEntity userWithRole = sysUserService.selectSysUserWithRole(entity);
-        if (userWithRole == null) {
+        if (StringUtil.isEmpty(userInput)||userWithRole == null) {
             //避免返回null，这里返回一个不含有任何值的User对象，在后期的密码比对过程中一样会验证失败
             return new SysUserEntity();
         }
