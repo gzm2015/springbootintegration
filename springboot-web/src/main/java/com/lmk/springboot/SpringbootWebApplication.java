@@ -16,12 +16,15 @@ import java.util.Date;
 @EnableTransactionManagement
 public class SpringbootWebApplication {
 
+
+    @Autowired
+    SysUserService sysUserService;
+
     public static void main(String[] args) {
         SpringApplication.run(SpringbootWebApplication.class, args);
     }
 
-    @Autowired
-    SysUserService sysUserService;
+
 
     //在application-dev.yml 配置context-path为my  访问 http://localhost:8080/my/hello
     /*

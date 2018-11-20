@@ -92,7 +92,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 })
                 .permitAll()
                 .and().logout().permitAll().and().csrf().disable();*/
-        http.authorizeRequests()
+       /* http.authorizeRequests()
                 .antMatchers("/admin/**").hasRole("超级管理员")
                 .antMatchers("/index").anonymous()
                 .anyRequest().authenticated()//其他的路径都是登录后即可访问
@@ -120,7 +120,37 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 })
                 .loginProcessingUrl("/loginOnForm")
                 .usernameParameter("username").passwordParameter("password").permitAll()
-                .and().logout().permitAll().and().csrf().disable();
+                .and().logout().permitAll().and().csrf().disable();*/
+
+
+        http.formLogin()
+                .loginPage("/login")
+                .loginProcessingUrl("/loginOnForm")
+                .successHandler(new AuthenticationSuccessHandler() {
+                    @Override
+                    public void onAuthenticationSuccess(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Authentication authentication) throws IOException, ServletException {
+                        httpServletResponse.setContentType("application/json;charset=utf-8");
+                        PrintWriter out = httpServletResponse.getWriter();
+                        out.write("{\"status\":\"ok\",\"msg\":\"登录成功\"}");
+                        out.flush();
+                        out.close();
+                    }
+                })
+                .failureHandler(new AuthenticationFailureHandler() {
+                    @Override
+                    public void onAuthenticationFailure(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, AuthenticationException e) throws IOException, ServletException {
+                        httpServletResponse.setContentType("application/json;charset=utf-8");
+                        PrintWriter out = httpServletResponse.getWriter();
+                        out.write("{\"status\":\"error\",\"msg\":\"登录失败\"}");
+                        out.flush();
+                        out.close();
+                    }
+                })
+                .and().authorizeRequests()
+                        .antMatchers("/index").permitAll()
+                        .anyRequest()
+                        .authenticated()
+                .and().csrf().disable();
     }
 
     /*注意spring boot 默认静态位置就在 static 文件夹下 无需多加一层*/

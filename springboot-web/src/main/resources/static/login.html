@@ -48,33 +48,40 @@
         });
     }
 </script>-->
+<script src="http://libs.baidu.com/jquery/2.1.4/jquery.min.js"></script>
 <script type="text/javascript">
 $(document).ready(function() {
         $("#subbutton").click(function(e) {
-        var username = "xxx";
-        var password = "xxx";
-        $.ajax({
-            url : "http://localhost:8080/my/loginOnForm",
-            type : "POST",
-            //contentType: "application/json;charset=utf-8",
-            //data : JSON.stringify({'username':username,'password':password}),
-            //默认ajax post使用的是 application/x-www-form-urlencoded
-            //不要用 JSON.stringify 转为json字符串 后台request 无法从json 字符串中分开 username 和 password而视其为一个整体
-            data : {'username':username,'password':password},//默认ajax post使用的是 application/x-www-form-urlencoded
-            success : function(result) {
-                console.log("success");
-                console.log(result.status);
-                console.log(result.msg);
-                window.location.href = "/my/dashboard"
-            },
-            error:function(result){
-                console.log("fail");
-                console.log(result.status);
-                console.log(result.msg);
-                alert(result.msg)
-            }
-        })
-        return false;
+            var username = "xxx";
+            var password = $("#password").val();
+            console.log(password);
+            alert(password);
+            $.ajax({
+                //ajax 提交的登录地址必须和springsecurity 里面的loginProcessingUrl设置的地址对应
+                url : "http://localhost:8080/my/loginOnForm",
+                type : "POST",
+                //contentType: "application/json;charset=utf-8",
+                //data : JSON.stringify({'username':username,'password':password}),
+                //默认ajax post使用的是 application/x-www-form-urlencoded
+                //不要用 JSON.stringify 转为json字符串 后台request 无法从json 字符串中分开 username 和 password而视其为一个整体
+                data : {'username':username,'password':password},//默认ajax post使用的是 application/x-www-form-urlencoded
+                success : function(result) {
+                    console.log("success");
+                    if(result.status === "error"){
+                        alert(result.status);
+                        alert(result.msg);
+                    }else if(result.status === "ok") {
+                        window.location.href = "/my/dashboard"
+                    }
+                },
+                error:function(result){
+                    console.log("fail");
+                    console.log(result.status);
+                    console.log(result.msg);
+                    alert(result.msg)
+                }
+            })
+            return false;
     })
 });
 </script>
