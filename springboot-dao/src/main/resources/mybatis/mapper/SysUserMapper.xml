@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.lmk.springboot.dao.SysUserDAO">
+
     <resultMap id="BaseResultMap" type="com.lmk.springboot.entity.SysUserEntity">
         <id column="user_id" property="userId" jdbcType="BIGINT" javaType="java.lang.Long"/>
         <result column="dept_id" property="deptId" jdbcType="BIGINT" javaType="java.lang.Long"/>
@@ -14,10 +15,29 @@
         <result column="create_date" property="createDate" jdbcType="TIMESTAMP" javaType="java.util.Date"/>
 
         <collection property="roles" ofType="com.lmk.springboot.entity.SysRoleEntity" columnPrefix="role_">
-            <id column="uuid" property="roleId" jdbcType="BIGINT"/>
+            <id column="uuid" property="roleId" jdbcType="INTEGER"/>
             <result column="name" property="name" jdbcType="VARCHAR"/>
             <result column="type" property="roleType" jdbcType="VARCHAR"/>
         </collection>
+    </resultMap>
+
+    <resultMap id="OnlyUserMap" type="com.lmk.springboot.entity.SysUserEntity">
+        <id column="user_id" property="userId" jdbcType="BIGINT" javaType="java.lang.Long"/>
+        <result column="dept_id" property="deptId" jdbcType="BIGINT" javaType="java.lang.Long"/>
+        <result column="username" property="username" jdbcType="VARCHAR"/>
+        <result column="password" property="password" jdbcType="VARCHAR"/>
+        <result column="salt" property="salt" jdbcType="VARCHAR"/>
+        <result column="mobile" property="mobile" jdbcType="VARCHAR"/>
+        <result column="email" property="email" jdbcType="VARCHAR"/>
+        <result column="status" property="status" jdbcType="INTEGER" />
+        <!-- 返回时间戳对应mysql字段类型为datetime -->
+        <result column="create_date" property="createDate" jdbcType="TIMESTAMP" javaType="java.util.Date"/>
+
+        <!--<collection property="roles" ofType="com.lmk.springboot.entity.SysRoleEntity" columnPrefix="role_">
+            <id column="uuid" property="roleId" jdbcType="INTEGER"/>
+            <result column="name" property="name" jdbcType="VARCHAR"/>
+            <result column="type" property="roleType" jdbcType="VARCHAR"/>
+        </collection>-->
     </resultMap>
 
     <!-- 数据库列列表 -->
@@ -70,13 +90,29 @@
     </select>
 
     <!-- 获得SysUser数据集合 -->
-    <select id="selectSysUser" parameterType="SysUserDTO" resultMap="BaseResultMap">
-        select
+    <select id="selectSysUser" parameterType="SysUserEntity" resultMap="OnlyUserMap">
+        <!--select
         <include refid="Base_Column_List"/>
         from sys_user
         <where>
-            <if test="username != null">username like "%"#{username}"%"</if>
-        </where>
+            <if test="username != null  and username != ''">username like "%"#{username}"%"</if>
+        </where>-->
+        select
+          <include refid="Base_Column_List"/>
+        from sys_user
+    </select>
+
+
+    <select id="selectSysUserDTo" parameterType="SysUserDTO" resultMap="OnlyUserMap">
+        <!--select
+        <include refid="Base_Column_List"/>
+        from sys_user
+        <where>
+            <if test="username != null  and username != ''">username like "%"#{username}"%"</if>
+        </where>-->
+        select
+        <include refid="Base_Column_List"/>
+        from sys_user
     </select>
 
     <!-- 获得SysUser数据集合 -->

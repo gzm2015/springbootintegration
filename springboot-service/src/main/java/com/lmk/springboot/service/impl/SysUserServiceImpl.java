@@ -79,9 +79,9 @@ public class SysUserServiceImpl implements SysUserService {
     }
 
     @Override
-    public PageResultBean<SysUserEntity> selectSysUserByPage(SysUserDTO sysUserDTO) {
+    public PageResultBean<SysUserEntity> selectSysUserByPage(SysUserEntity sysUserEntity) {
         PageHelper.startPage(PageUtils.getPageNum(), PageUtils.getPageSize());
-        return new PageResultBean<SysUserEntity>(sysUserDAO.selectSysUser(sysUserDTO));
+        return new PageResultBean<SysUserEntity>(sysUserDAO.selectSysUser(sysUserEntity));
     }
 
     @Transactional
@@ -94,21 +94,28 @@ public class SysUserServiceImpl implements SysUserService {
 
     @Override
     public PageResultBean<SysUserEntity> getPage(SysUserEntity sysUserEntity){
-       /* if (sysUserEntity.getPage() != null && sysUserEntity.getRows() != null) {
+        if (sysUserEntity.getPage() != null && sysUserEntity.getRows() != null) {
             PageHelper.startPage(sysUserEntity.getPage(), sysUserEntity.getRows());
         }
         Example example = new Example(SysUserEntity.class);
         Example.Criteria criteria = example.createCriteria();
-        if (sysUserEntity.getUsername()!=null) {
+        /*if (sysUserEntity.getUsername()!=null) {
             criteria.andLike("username", "%" + sysUserEntity.getUsername() + "%");
-        }
-        List<SysUserEntity> list =  sysUserDAO.selectSysUserWithRole(sysUserEntity);
-        return new PageResultBean<SysUserEntity>(list);*/
-       return null;
+        }*/
+        List<SysUserEntity> list =  sysUserDAO.selectSysUser(sysUserEntity);
+        return new PageResultBean<SysUserEntity>(list);
+       //return null;
     }
 
     @Override
     public SysUserEntity selectSysUserWithRole(SysUserEntity sysUserEntity) {
         return sysUserDAO.selectSysUserWithRole(sysUserEntity);
+    }
+
+    @Override
+    public PageResultBean<SysUserEntity> getPageByDTO(SysUserDTO dto) {
+        PageHelper.startPage(1,5);
+        List<SysUserEntity> list = sysUserDAO.selectSysUserDTo(dto);
+        return new PageResultBean<SysUserEntity>(list);
     }
 }

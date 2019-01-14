@@ -47,7 +47,7 @@ public class UserTest {
 
     @Test
     public void testSelectPage() {
-        SysUserDTO userDTO = new SysUserDTO();
+        SysUserEntity userDTO = new SysUserEntity();
         userDTO.setUsername("aaa");
         PageResultBean<SysUserEntity> resultBean =  sysUserService.selectSysUserByPage(userDTO);
         System.out.println(resultBean);

@@ -55,12 +55,14 @@ public interface SysUserDAO {
 
     /**
      * 获得SysUser数据集合
-     * 
-     * @param sysUserDTO
+     *
      * 
      * @return
      */
-    List<SysUserEntity> selectSysUser(SysUserDTO sysUserDTO);
+    List<SysUserEntity> selectSysUser(SysUserEntity sysUserEntity);
+
+
+    List<SysUserEntity> selectSysUserDTo(SysUserDTO sysUserDTO);
 
 
     SysUserEntity selectSysUserWithRole(SysUserEntity sysUserEntity);

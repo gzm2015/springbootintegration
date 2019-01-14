@@ -50,7 +50,7 @@ public class PageHelperTest {
         Random ra =new Random();
         int random = ra.nextInt(100000);
 
-        SysRoleEntity sysRoleEntity = new SysRoleEntity((long)random,"test","test");
+        SysRoleEntity sysRoleEntity = new SysRoleEntity(random,"test","test");
 
         roleService.insert(sysRoleEntity);
 

@@ -60,7 +60,7 @@ public interface SysUserService {
      * @param sysUserDTO
      * @return
      */
-    PageResultBean<SysUserEntity> selectSysUserByPage(SysUserDTO sysUserDTO);
+    PageResultBean<SysUserEntity> selectSysUserByPage(SysUserEntity sysUserEntity);
 
 
     /**
@@ -74,6 +74,11 @@ public interface SysUserService {
 
     PageResultBean<SysUserEntity> getPage(SysUserEntity sysUserEntity);
 
+    /**
+     * 返回用户及其权限
+     */
     SysUserEntity selectSysUserWithRole(SysUserEntity sysUserEntity);
 
+
+    PageResultBean<SysUserEntity> getPageByDTO(SysUserDTO dto);
 }

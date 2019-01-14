@@ -5,6 +5,7 @@ import com.lmk.springboot.warp.FailTip;
 import com.lmk.springboot.warp.SuccessTip;
 import com.lmk.springboot.warp.Tip;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
@@ -26,16 +27,9 @@ public class LoginController {
     public static final String REDIRECT = "redirect:";
 
     /*未登陆访问如 /dashboard的时候被 SpringSecurity 拦截.loginPage("/login") 会访问这里*/
-    /*@GetMapping("/login")
-    @ResponseStatus(HttpStatus.UNAUTHORIZED)
-    @ResponseBody
-    public Tip index(){
-        return new FailTip();
-    }*/
-
-    @GetMapping(value = {"/login","/index"})
-    public String login(){
-       return "login";
+    @RequestMapping("/relog")
+    public String relog(){
+        return "login";
     }
 
     @GetMapping(value = {"/loginOnForm"})
@@ -48,6 +42,12 @@ public class LoginController {
         return "dashboard";
     }
 
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @GetMapping(value = "/role")
+    public String roleTest(){
+        return "dashboard";
+    }
+
 
     @GetMapping(value="/logout")
     public String logoutPage (HttpServletRequest request, HttpServletResponse response) {
@@ -55,6 +55,9 @@ public class LoginController {
         if (auth != null){
             new SecurityContextLogoutHandler().logout(request, response, auth);
         }
-        return "redirect:/login?logout";//You can redirect wherever you want, but generally it's a good practice to show login screen again.
+        return "redirect:/login";//You can redirect wherever you want, but generally it's a good practice to show login screen again.
     }
+
+
+
 }

@@ -20,8 +20,14 @@
        <!-- <button type="submit">登录</button>-->
     </form>
     <button id="subbutton">登录</button>
+
+    <div class="container unauthenticated">
+        <div>
+            With Github: <a href="/login/github">click here</a>
+        </div>
+    </div>
     </body>
-<script src="js/jquery-1.9.1.min.js" type="text/javascript"></script>
+<script src="../static/js/jquery-1.9.1.min.js" type="text/javascript"></script>
 <!--<script>
     function submitForm() {
         var username = $("#username").val();
@@ -58,7 +64,7 @@ $(document).ready(function() {
             alert(password);
             $.ajax({
                 //ajax 提交的登录地址必须和springsecurity 里面的loginProcessingUrl设置的地址对应
-                url : "http://localhost:8080/my/loginOnForm",
+                url : "http://localhost:8080/loginOnForm",
                 type : "POST",
                 //contentType: "application/json;charset=utf-8",
                 //data : JSON.stringify({'username':username,'password':password}),
@@ -71,7 +77,7 @@ $(document).ready(function() {
                         alert(result.status);
                         alert(result.msg);
                     }else if(result.status === "ok") {
-                        window.location.href = "/my/dashboard"
+                        window.location.href = "/dashboard"
                     }
                 },
                 error:function(result){

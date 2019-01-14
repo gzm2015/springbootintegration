@@ -1,6 +1,7 @@
 package com.lmk.springboot;
 
 import com.lmk.springboot.bean.PageResultBean;
+import com.lmk.springboot.dto.SysUserDTO;
 import com.lmk.springboot.entity.SysUserEntity;
 import com.lmk.springboot.service.SysUserService;
 import com.lmk.springboot.service.impl.UserPageServiceImpl;
@@ -50,5 +51,12 @@ public class PageUtilTest {
         userDTO.setUserId(201l);
         SysUserEntity res = sysUserService.selectSysUserWithRole(userDTO);
         System.out.println();
+    }
+
+
+    @Test
+    public void PageTest() {;
+        PageResultBean<SysUserEntity>  list = sysUserService.getPageByDTO(new SysUserDTO());
+        System.out.println(list);
     }
 }

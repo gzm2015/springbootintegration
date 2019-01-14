@@ -4,10 +4,10 @@ server:
 spring:
   profiles:
     active: dev
-  mvc:
-      view:
-        suffix: .html
-        prefix: /
+  thymeleaf:
+    cache: false
+    prefix: classpath:/templates/
+    suffix: .html
 
 mybatis:
   config-location: classpath:mybatis/mybatis-config.xml

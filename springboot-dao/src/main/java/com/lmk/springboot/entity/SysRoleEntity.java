@@ -22,7 +22,7 @@ import java.io.Serializable;
 @NoArgsConstructor
 public class SysRoleEntity implements Serializable {
 
-    private Long roleId;
+    private Integer roleId;
 
     //角色名称
     private String name;

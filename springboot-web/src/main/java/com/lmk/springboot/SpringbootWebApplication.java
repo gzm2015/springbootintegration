@@ -26,7 +26,7 @@ public class SpringbootWebApplication {
 
 
 
-    //在application-dev.yml 配置context-path为my  访问 http://localhost:8080/my/hello
+    //在application-dev.yml 配置context-path为my  访问 http://localhost:8080/hello
     /*
     *插入数据是失败的时候 先试一下查询  查询结果也没得 又不报错 重新写一下 yml 文件
     */
